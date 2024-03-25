@@ -21,131 +21,79 @@
 		</div>
 	</section>
 	<html>
-	<head>
-		<style>
-			.container2 {
-				position: relative;
-				width: 100%;
-				max-width: 400px;
-				padding-left: 75px;
-			}
+<style>
+* {
+  box-sizing: border-box;
+}
 
-				.container2 img {
-					width: 100%;
-					height: auto;
-					border-radius: 5px;
-				}
+body {
+  margin: 0;
+}
 
-				.container2 .btn {
-					position: absolute;
-					top: 50%;
-					left: 60%;
-					transform: translate(-50%, -50%);
-					-ms-transform: translate(-50%, -50%);
-					background-color: #f1f1f1;
-					color: #212529;
-					font-size: 16px;
-					padding: 16px 30px;
-					border-style: solid;
-					cursor: pointer;
-					border-radius: 5px;
-					text-align: center;
-				}
 
-					.container2 .btn:hover {
-						background-color: #212529;
-						color: white;
-					}
+/* Create three unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
 
-			.container3 {
-				position: relative;
-				width: 100%;
-				max-width: 400px;
-				padding-left: 75px;
-				left: 62.2%;
-				top: -247px;
-			}
+/* Left and right column */
+.column.side {
+  width: 37.5%;
+}
 
-				.container3 img {
-					width: 100%;
-					height: auto;
-					border-radius: 5px;
-				}
+.column.side img {
+	border-radius: 5px;
+}
 
-				.container3 .btn {
-					position: absolute;
-					top: 50%;
-					left: 60%;
-					transform: translate(-50%, -50%);
-					-ms-transform: translate(-50%, -50%);
-					background-color: #f1f1f1;
-					color: #212529;
-					font-size: 16px;
-					padding: 16px 30px;
-					border-style: solid;
-					cursor: pointer;
-					border-radius: 5px;
-					text-align: center;
-				}
+.column.side .btn {
+	position: absolute;
+}
 
-					.container3 .btn:hover {
-						background-color: #212529;
-						color: white;
-					}
+/* Middle column */
+.column.middle {
+  width: 25%;
+}
 
-			.container4 {
-				position: relative;
-				width: 100%;
-				max-width: 400px;
-				padding-left: 75px;
-				left: 31%;
-				top: -494px;
-			}
+.column.middle img {
+	border-radius: 5px;
+}
 
-				.container4 img {
-					width: 100%;
-					height: auto;
-					border-radius: 5px;
-				}
 
-				.container4 .btn {
-					position: absolute;
-					top: 50%;
-					left: 60%;
-					transform: translate(-50%, -50%);
-					-ms-transform: translate(-50%, -50%);
-					background-color: #f1f1f1;
-					color: #212529;
-					font-size: 16px;
-					padding: 16px 30px;
-					border-style: solid;
-					cursor: pointer;
-					border-radius: 5px;
-					text-align: center;
-				}
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
-					.container4 .btn:hover {
-						background-color: #212529;
-						color: white;
-					}
-		</style>
-	</head>
-	<body>
-
-		<div class="container2">
-			<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Menswear" style="width:100%">
-			<button class="btn btn-outline-secondary">Menswear</button>
-		</div>
-		<div class="container3">
-			<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Womenswear" style="width:100%">
-			<button class="btn btn-outline-secondary">Womenswear</button>
-		</div>
-		<div class="container4">
-			<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Everything Else" style="width:100%">
-			<button class="btn btn-outline-secondary">Everything Else</button>
-		</div>
-
-	</body>
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="column side">
+<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Menswear" style="width:100%">
+<button class="btn btn-outline-secondary">Menswear</button>
+  </div>
+  
+  <div class="column middle">
+<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Everything Else" style="width:100%">
+<button class="btn btn-outline-secondary">Everything Else</button>
+  </div>
+  
+  <div class="column side">
+<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Womenswear" style="width:100%">
+<button class="btn btn-outline-secondary">Womenswear</button>
+  </div>
+</div>
+  
+</body>
 </html>
 
     </div>
