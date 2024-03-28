@@ -21,6 +21,7 @@
 		</div>
 	</section>
 	<html>
+		<head>
 <style>
 * {
   box-sizing: border-box;
@@ -38,25 +39,66 @@ body {
 }
 
 /* Left and right column */
-.column.side {
+.column.sidel {
   width: 37.5%;
+	transform: translateX(13%);
+	-ms-transform: translateX(13%);
 }
 
-.column.side img {
+.column.sidel img {
+	object-fit: fill;
 	border-radius: 5px;
+	width: 50px;
+	height: 300px%;
 }
 
-.column.side .btn {
-	position: absolute;
+.column.sidel .btn {
+	position: static;
+	border-radius: 5px;
+	transform: translateY(-350%);
+	-ms-transform: translateY(-350%);
+	cursor: pointer;
+	padding: 16px 30px;
+}
+
+.column.sider {
+  width: 37.5%;
+	transform: translateX(-13%);
+	-ms-transform: translateX(-13%);
+}
+
+.column.sider img {
+	object-fit: fill;
+	border-radius: 5px;
+	width: 50px;
+	height: 300px%;
+}
+
+.column.sider .btn {
+	position: static;
+	border-radius: 5px;
+	transform: translateY(-350%);
+	-ms-transform: translateY(-350%);
+	cursor: pointer;
+	padding: 16px 30px;
 }
 
 /* Middle column */
 .column.middle {
   width: 25%;
+  transform: translateY(1.5%)
 }
 
 .column.middle img {
 	border-radius: 5px;
+}
+
+.column.middle .btn {
+	position: static;
+	border-radius: 5px;
+	transform: translateY(-325%);
+	-ms-transform: translateY(-325%);
+	cursor: pointer;
 }
 
 
@@ -77,18 +119,18 @@ screen and (max-width: 600px) {
 </head>
 <body>
 <div class="row">
-  <div class="column side">
-<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Menswear" style="width:100%">
+  <div class="column sidel">
+<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Menswear" style="width:90%; height:90%;">
 <button class="btn btn-outline-secondary">Menswear</button>
   </div>
   
   <div class="column middle">
-<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Everything Else" style="width:100%">
+                <img src="~/lib/images/accessory.png" alt="Everything Else" style="width:75%; height:86%;">
 <button class="btn btn-outline-secondary">Everything Else</button>
   </div>
   
-  <div class="column side">
-<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Womenswear" style="width:100%">
+  <div class="column sider">
+				<img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80" alt="Womenswear" style="width:90%; height:90%;">
 <button class="btn btn-outline-secondary">Womenswear</button>
   </div>
 </div>
