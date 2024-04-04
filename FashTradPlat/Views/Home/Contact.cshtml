@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+}
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+        form {
+            border-style: dashed;
+        }
+    </style>
+</head>
+
+
+<body>
+<h1>@ViewData["Title"]</h1>
+
+    <form action="/action_page.php">
+        <fieldset>
+            <label for="fname">First name:</label>
+            <br>
+            <input type="text" id="fname" name="fname" value="">
+            <br>
+            <label for="lname">Last name:</label>
+            <br>
+            <input type="text" id="lname" name="lname" value="">
+            <br>
+            <br>
+            <textarea name="message" rows="5" cols="40">
+
+            </textarea>
+            <br>
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</body>
