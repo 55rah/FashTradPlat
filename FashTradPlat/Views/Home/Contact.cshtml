@@ -6,6 +6,26 @@
         body {
             text-align: center;
         }
+        h4 {
+            float: left;
+            color: #737373;
+        }
+        div.address {
+            position: absolute;
+
+            left: 400px;
+            width: 215px;
+            height: 100px;
+        }
+        form.form {
+            border-style: solid;
+            border-radius: 15px;
+            padding: 15px;
+            border-width: 2px;
+        }
+        p {
+            float:left;
+        }
     </style>
 </head>
 
@@ -14,22 +34,26 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <form style="border-style: solid;" action="/action_page.php">
+    <form class="form" action="">
         <fieldset>
-            <label for="fname">First name:</label>
+            <label for="fname">Full Name:</label>
             <br>
-            <input type="text" id="fname" name="fname" value=""> 
+            <input label type="text" id="fname" name="fname" value=""> 
             <br>
-            <label for="lname">Last name:</label>
+            <label for="email">Email:</label>
             <br>
-            <input type="text" id="lname" name="lname" value="">
+            <input type="email" id="email" name="email">
             <br>
             <br>
-            <textarea name="message" rows="5" cols="40">
-            </textarea>
+            <textarea name="message" rows="5" cols="40" value=""></textarea>
             <br>
-            <input type="submit" value="Send">
+            <input type="submit" onclick="alert('Email Sent!')" value="Send">
         </fieldset>
     </form>
+</div>
+<div class="address">
+            <h4><i>Address</i></h4>
+            <br/>
+            <p>65 Dominion Road, Mt Eden, Auckland 1024</p>
 </div>
 </body>
