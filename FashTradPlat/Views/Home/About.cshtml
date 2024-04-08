@@ -1,17 +1,58 @@
-﻿<html>
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+<html>
 <head>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        /* two columns that floats next to each other */
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding-bottom: 12px
+        }
+
+        .column2 {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
         }
     </style>
 </head>
-
 <body>
-    <div class="container text-black rounded text-center">
-        <h1>About Us</h1>
+
+    <div class="text-center" style="padding: 15px">
+    <h1 style="color: black">About Us</h1>
+    </div>
+
+    <div class="row">
+        <div class="column text-center" style="background-color: #000000;">
+            <h2>Who are we?</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porta diam eros, id rhoncus ipsum interdum sed. Fusce tincidunt at est eu luctus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque id finibus nunc. Fusce tincidunt, eros id finibus euismod, ante arcu ultricies neque, sed aliquet leo ipsum vel elit. Etiam at enim volutpat, feugiat tellus sit amet, accumsan nisl. Aliquam vel neque id urna sodales rutrum quis id lacus. Aenean aliquam ipsum eu ex sodales, quis tincidunt nibh pulvinar. Quisque vitae velit ac turpis fermentum finibus eu in mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc consectetur risus in nisi eleifend, nec auctor dui hendrerit. Nullam eleifend mi a dapibus tristique. Sed et malesuada metus. Cras rutrum consequat dictum. Quisque vitae gravida eros, sed hendrerit ante.</p>
+        </div>
+        <div class="column2 text-center" style="background-color: #000000;">
+            <h2>What do we do?</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit in dolor non pulvinar. Mauris placerat velit id sem viverra, quis mollis nisl tempus. Aliquam bibendum interdum ligula, eu ornare leo mollis non. Fusce volutpat et turpis vel venenatis. Mauris semper nisl nec metus dignissim, vel gravida justo ullamcorper. Vivamus sed pretium urna. Mauris a nibh ac tellus tempus volutpat. In posuere risus quis elit egestas ultricies. Sed ut leo enim. In sed rutrum dolor, vitae luctus ante. Fusce pellentesque neque vitae sapien mollis, eget egestas nisi sagittis. Nullam tempus lacinia eros ut ornare. Donec id justo cursus, sollicitudin tellus quis, vestibulum libero. Aliquam dapibus sem neque, vel tempus ex euismod eget.</p>
+        </div>
     </div>
 </body>
-
 
 </html>
