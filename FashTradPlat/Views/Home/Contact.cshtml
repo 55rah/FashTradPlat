@@ -1,54 +1,99 @@
 ﻿@{
     ViewData["Title"] = "Contact Us";
 }
+<html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
-            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
         }
-        h4 {
-            float: left;
-            color: #737373;
-        }
-        div.address {
-            position: absolute;
 
-            left: 400px;
-            width: 215px;
-            height: 100px;
+        * {
+            box-sizing: border-box;
         }
+        
+        input[class=firstname], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=email], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            background-color:#000;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #252525;
+        }
+
         form.form {
             border-style: solid;
             border-radius: 15px;
             padding: 15px;
             border-width: 2px;
+            text-align: center;
         }
-        p {
-            float:left;
+
+        textarea {
+            height: 200px;
         }
+
+        div.address {
+            position: relative;
+            left: 27%;
+            width: 215px;
+            height: 100px;
+        }
+
     </style>
 </head>
 
 
 <body>
-<h1>@ViewData["Title"]</h1>
+    
+    <div class="container text-black rounded text-center">
+        <h1>Contact Us</h1>
+    </div>
 
-<div>
-    <form class="form" action="">
-        <fieldset>
-            <label for="fname">Full Name:</label>
+<div class="container">
+    <form class="form" action="/action_page.php">
+            <label for="fname">First Name</label>
             <br>
-            <input label type="text" id="fname" name="fname" value=""> 
+            <input class="firstname" type="text" id="fname" name="firstname" placeholder="Your name.." style="width:50%"> 
             <br>
-            <label for="email">Email:</label>
+
+            <label for="email">Email</label>
             <br>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" placeholder="Your email.." style="width:50%">
             <br>
+
+            <label for="message">Message</label>
             <br>
-            <textarea name="message" rows="5" cols="40" value=""></textarea>
+            <textarea id="subject" name="subject" placeholder="Write.." style="width:50%"></textarea>
             <br>
-            <input type="submit" onclick="alert('Email Sent!')" value="Send">
-        </fieldset>
+
+            <input type="submit" value="Send">
     </form>
 </div>
 <div class="address">
@@ -57,3 +102,4 @@
             <p>65 Dominion Road, Mt Eden, Auckland 1024</p>
 </div>
 </body>
+</html>

@@ -28,6 +28,31 @@ namespace FashTradPlat.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Menswear()
+        {
+            return View();
+        }
+
+        public IActionResult Womenswear()
+        {
+            return View();
+        }
+
+        public IActionResult EverythingElse()
+        {
+            return View();
+        }
+
+        public IActionResult AllProducts()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
