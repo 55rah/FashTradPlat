@@ -73,12 +73,12 @@ namespace FashTradPlat.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(255, ErrorMessage = "The first name field should have a maximum of 255 characters")]
+            [StringLength(35, ErrorMessage = "The first name field should have a maximum of 35 characters")]
             [Display(Name ="Firstname")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(255, ErrorMessage = "The last name field should have a maximum of 255 characters")]
+            [StringLength(35, ErrorMessage = "The last name field should have a maximum of 35 characters")]
             [Display(Name = "Lastname")]
             public string LastName { get; set; }
 
