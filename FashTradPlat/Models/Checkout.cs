@@ -1,11 +1,13 @@
-﻿namespace FashTradPlat.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FashTradPlat.Models
 {
     public class Checkout
     {
-        public int Checkout_ID { get; set; }
-        public int Product_ID { get; set; }
+        [Key] public int Checkout_ID { get; set; }
+
         public required decimal Price { get; set; }
-        public required Product Product { get; set; }
+        public int Transaction_ID { get; set; }
         public required Transaction Transaction { get; set; }
     }
 }

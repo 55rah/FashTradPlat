@@ -17,7 +17,7 @@ namespace FashTradPlat.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.16")
+                .HasAnnotation("ProductVersion", "7.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -95,6 +95,146 @@ namespace FashTradPlat.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+
+                    b.Property<string>("Category_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Checkout", b =>
+                {
+                    b.Property<int>("Checkout_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Checkout_ID"));
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Transaction_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Checkout_ID");
+
+                    b.ToTable("Checkouts");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Payment", b =>
+                {
+                    b.Property<int>("Payment_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Payment_ID"));
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Payment_amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Payment_method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Transaction_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Payment_ID");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CheckoutID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Product_description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Product_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Product_request")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Transaction_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("CheckoutID");
+
+                    b.HasIndex("Transaction_ID");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Transaction", b =>
+                {
+                    b.Property<int>("Transaction_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Transaction_ID"));
+
+                    b.Property<int>("Checkout_ID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EstCompletion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Payment_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SendAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Transaction_ID");
+
+                    b.HasIndex("Checkout_ID")
+                        .IsUnique();
+
+                    b.HasIndex("Payment_ID")
+                        .IsUnique();
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -234,6 +374,52 @@ namespace FashTradPlat.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FashTradPlat.Models.Product", b =>
+                {
+                    b.HasOne("FashTradPlat.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FashTradPlat.Models.Checkout", "Checkout")
+                        .WithMany()
+                        .HasForeignKey("CheckoutID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FashTradPlat.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("Transaction_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Checkout");
+
+                    b.Navigation("Transaction");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Transaction", b =>
+                {
+                    b.HasOne("FashTradPlat.Models.Checkout", "Checkout")
+                        .WithOne("Transaction")
+                        .HasForeignKey("FashTradPlat.Models.Transaction", "Checkout_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FashTradPlat.Models.Payment", "Payment")
+                        .WithOne("Transaction")
+                        .HasForeignKey("FashTradPlat.Models.Transaction", "Payment_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Checkout");
+
+                    b.Navigation("Payment");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -282,6 +468,23 @@ namespace FashTradPlat.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Checkout", b =>
+                {
+                    b.Navigation("Transaction")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FashTradPlat.Models.Payment", b =>
+                {
+                    b.Navigation("Transaction")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

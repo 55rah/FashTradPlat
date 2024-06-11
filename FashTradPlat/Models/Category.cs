@@ -1,9 +1,11 @@
-﻿namespace FashTradPlat.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FashTradPlat.Models
 {
     public class Category
     {
-        public int Category_ID { get; set; }
-        public required string Category_Name { get; set; }
-        public required ICollection<Product> Products { get; set; }
+        public int CategoryID { get; set; }
+        public string Category_Name { get; set; }
+        public  ICollection<Product> Products { get; set; }
     }
 }

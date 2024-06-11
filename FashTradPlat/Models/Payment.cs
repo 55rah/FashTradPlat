@@ -1,11 +1,14 @@
-﻿namespace FashTradPlat.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FashTradPlat.Models
 {
     public class Payment
     {
-        public int Payment_ID { get; set; }
+        [Key] public int Payment_ID { get; set; }
         public required decimal Payment_amount { get; set; }
         public required string Payment_method { get; set; }
         public DateTime PaymentDate { get; set; }
+        public int Transaction_ID { get; set; }
         public required Transaction Transaction { get; set; }
     }
 }
