@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FashTradPlat.Migrations
 {
     /// <inheritdoc />
-    public partial class tablecreation : Migration
+    public partial class tableCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,27 +56,13 @@ namespace FashTradPlat.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    Category_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Category_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Checkouts",
-                columns: table => new
-                {
-                    Checkout_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Transaction_ID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Checkouts", x => x.Checkout_ID);
+                    table.PrimaryKey("PK_Categories", x => x.Category_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,8 +73,7 @@ namespace FashTradPlat.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Payment_amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Payment_method = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Transaction_ID = table.Column<int>(type: "int", nullable: false)
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,11 +187,54 @@ namespace FashTradPlat.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ProductID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Product_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Product_description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Product_request = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ProductID);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "Category_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Checkouts",
+                columns: table => new
+                {
+                    Checkout_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Product_ID = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Checkouts", x => x.Checkout_ID);
+                    table.ForeignKey(
+                        name: "FK_Checkouts_Products_Product_ID",
+                        column: x => x.Product_ID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
                     Transaction_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Product_ID = table.Column<int>(type: "int", nullable: false),
                     Payment_ID = table.Column<int>(type: "int", nullable: false),
                     Checkout_ID = table.Column<int>(type: "int", nullable: false),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -228,42 +256,11 @@ namespace FashTradPlat.Migrations
                         principalTable: "Payments",
                         principalColumn: "Payment_ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Product_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Product_description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Product_request = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CheckoutID = table.Column<int>(type: "int", nullable: false),
-                    Transaction_ID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductID);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Checkouts_CheckoutID",
-                        column: x => x.CheckoutID,
-                        principalTable: "Checkouts",
-                        principalColumn: "Checkout_ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Transactions_Transaction_ID",
-                        column: x => x.Transaction_ID,
-                        principalTable: "Transactions",
-                        principalColumn: "Transaction_ID",
+                        name: "FK_Transactions_Products_Product_ID",
+                        column: x => x.Product_ID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -307,31 +304,29 @@ namespace FashTradPlat.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Checkouts_Product_ID",
+                table: "Checkouts",
+                column: "Product_ID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryID",
                 table: "Products",
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CheckoutID",
-                table: "Products",
-                column: "CheckoutID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_Transaction_ID",
-                table: "Products",
-                column: "Transaction_ID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_Checkout_ID",
                 table: "Transactions",
-                column: "Checkout_ID",
-                unique: true);
+                column: "Checkout_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_Payment_ID",
                 table: "Transactions",
-                column: "Payment_ID",
-                unique: true);
+                column: "Payment_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_Product_ID",
+                table: "Transactions",
+                column: "Product_ID");
         }
 
         /// <inheritdoc />
@@ -353,7 +348,7 @@ namespace FashTradPlat.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -362,16 +357,16 @@ namespace FashTradPlat.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Transactions");
-
-            migrationBuilder.DropTable(
                 name: "Checkouts");
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

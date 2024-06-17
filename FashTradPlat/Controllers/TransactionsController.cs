@@ -22,7 +22,7 @@ namespace FashTradPlat.Controllers
         // GET: Transactions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transactions.Include(t => t.Checkout).Include(t => t.Payment);
+            var applicationDbContext = _context.Transactions.Include(t => t.Checkout).Include(t => t.Payment).Include(t => t.Product);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace FashTradPlat.Controllers
             var transaction = await _context.Transactions
                 .Include(t => t.Checkout)
                 .Include(t => t.Payment)
+                .Include(t => t.Product)
                 .FirstOrDefaultAsync(m => m.Transaction_ID == id);
             if (transaction == null)
             {
@@ -51,6 +52,7 @@ namespace FashTradPlat.Controllers
         {
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID");
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID");
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID");
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Transaction_ID,Payment_ID,Checkout_ID,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
+        public async Task<IActionResult> Create([Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +71,7 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", transaction.Product_ID);
             return View(transaction);
         }
 
@@ -87,6 +90,7 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", transaction.Product_ID);
             return View(transaction);
         }
 
@@ -95,7 +99,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Transaction_ID,Payment_ID,Checkout_ID,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
+        public async Task<IActionResult> Edit(int id, [Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
         {
             if (id != transaction.Transaction_ID)
             {
@@ -124,6 +128,7 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", transaction.Product_ID);
             return View(transaction);
         }
 
@@ -138,6 +143,7 @@ namespace FashTradPlat.Controllers
             var transaction = await _context.Transactions
                 .Include(t => t.Checkout)
                 .Include(t => t.Payment)
+                .Include(t => t.Product)
                 .FirstOrDefaultAsync(m => m.Transaction_ID == id);
             if (transaction == null)
             {

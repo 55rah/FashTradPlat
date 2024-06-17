@@ -56,7 +56,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Payment_ID,Payment_amount,Payment_method,PaymentDate,Transaction_ID")] Payment payment)
+        public async Task<IActionResult> Create([Bind("Payment_ID,Payment_amount,Payment_method,PaymentDate")] Payment payment)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Payment_ID,Payment_amount,Payment_method,PaymentDate,Transaction_ID")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("Payment_ID,Payment_amount,Payment_method,PaymentDate")] Payment payment)
         {
             if (id != payment.Payment_ID)
             {

@@ -43,8 +43,3 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         }
     }
 }
-
-internal class modelBuilder
-{
-
-}

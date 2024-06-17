@@ -36,7 +36,7 @@ namespace FashTradPlat.Controllers
             }
 
             var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryID == id);
+                .FirstOrDefaultAsync(m => m.Category_ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryID,Category_Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Category_ID,Category_Name")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -88,9 +88,9 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryID,Category_Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Category_ID,Category_Name")] Category category)
         {
-            if (id != category.CategoryID)
+            if (id != category.Category_ID)
             {
                 return NotFound();
             }
@@ -104,7 +104,7 @@ namespace FashTradPlat.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.CategoryID))
+                    if (!CategoryExists(category.Category_ID))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace FashTradPlat.Controllers
             }
 
             var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryID == id);
+                .FirstOrDefaultAsync(m => m.Category_ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -157,7 +157,7 @@ namespace FashTradPlat.Controllers
 
         private bool CategoryExists(int id)
         {
-          return (_context.Categories?.Any(e => e.CategoryID == id)).GetValueOrDefault();
+          return (_context.Categories?.Any(e => e.Category_ID == id)).GetValueOrDefault();
         }
     }
 }

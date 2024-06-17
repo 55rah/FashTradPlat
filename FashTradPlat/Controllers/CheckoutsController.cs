@@ -22,9 +22,8 @@ namespace FashTradPlat.Controllers
         // GET: Checkouts
         public async Task<IActionResult> Index()
         {
-              return _context.Checkouts != null ? 
-                          View(await _context.Checkouts.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Checkouts'  is null.");
+            var applicationDbContext = _context.Checkouts.Include(c => c.Product);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Checkouts/Details/5
@@ -36,6 +35,7 @@ namespace FashTradPlat.Controllers
             }
 
             var checkout = await _context.Checkouts
+                .Include(c => c.Product)
                 .FirstOrDefaultAsync(m => m.Checkout_ID == id);
             if (checkout == null)
             {
@@ -48,6 +48,7 @@ namespace FashTradPlat.Controllers
         // GET: Checkouts/Create
         public IActionResult Create()
         {
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Checkout_ID,Price,Transaction_ID")] Checkout checkout)
+        public async Task<IActionResult> Create([Bind("Checkout_ID,Product_ID,Price")] Checkout checkout)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,7 @@ namespace FashTradPlat.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", checkout.Product_ID);
             return View(checkout);
         }
 
@@ -80,6 +82,7 @@ namespace FashTradPlat.Controllers
             {
                 return NotFound();
             }
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", checkout.Product_ID);
             return View(checkout);
         }
 
@@ -88,7 +91,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Checkout_ID,Price,Transaction_ID")] Checkout checkout)
+        public async Task<IActionResult> Edit(int id, [Bind("Checkout_ID,Product_ID,Price")] Checkout checkout)
         {
             if (id != checkout.Checkout_ID)
             {
@@ -115,6 +118,7 @@ namespace FashTradPlat.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID", checkout.Product_ID);
             return View(checkout);
         }
 
@@ -127,6 +131,7 @@ namespace FashTradPlat.Controllers
             }
 
             var checkout = await _context.Checkouts
+                .Include(c => c.Product)
                 .FirstOrDefaultAsync(m => m.Checkout_ID == id);
             if (checkout == null)
             {

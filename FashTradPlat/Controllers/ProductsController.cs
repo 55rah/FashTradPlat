@@ -22,7 +22,7 @@ namespace FashTradPlat.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Checkout).Include(p => p.Transaction);
+            var applicationDbContext = _context.Products.Include(p => p.Category);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,8 +36,6 @@ namespace FashTradPlat.Controllers
 
             var product = await _context.Products
                 .Include(p => p.Category)
-                .Include(p => p.Checkout)
-                .Include(p => p.Transaction)
                 .FirstOrDefaultAsync(m => m.ProductID == id);
             if (product == null)
             {
@@ -50,9 +48,7 @@ namespace FashTradPlat.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID");
-            ViewData["CheckoutID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID");
-            ViewData["Transaction_ID"] = new SelectList(_context.Transactions, "Transaction_ID", "Transaction_ID");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID");
             return View();
         }
 
@@ -61,7 +57,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,CheckoutID,Transaction_ID")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -69,9 +65,7 @@ namespace FashTradPlat.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", product.CategoryID);
-            ViewData["CheckoutID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", product.CheckoutID);
-            ViewData["Transaction_ID"] = new SelectList(_context.Transactions, "Transaction_ID", "Transaction_ID", product.Transaction_ID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID", product.CategoryID);
             return View(product);
         }
 
@@ -88,9 +82,7 @@ namespace FashTradPlat.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", product.CategoryID);
-            ViewData["CheckoutID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", product.CheckoutID);
-            ViewData["Transaction_ID"] = new SelectList(_context.Transactions, "Transaction_ID", "Transaction_ID", product.Transaction_ID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID", product.CategoryID);
             return View(product);
         }
 
@@ -99,7 +91,7 @@ namespace FashTradPlat.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,CheckoutID,Transaction_ID")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
         {
             if (id != product.ProductID)
             {
@@ -126,9 +118,7 @@ namespace FashTradPlat.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", product.CategoryID);
-            ViewData["CheckoutID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", product.CheckoutID);
-            ViewData["Transaction_ID"] = new SelectList(_context.Transactions, "Transaction_ID", "Transaction_ID", product.Transaction_ID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID", product.CategoryID);
             return View(product);
         }
 
@@ -142,8 +132,6 @@ namespace FashTradPlat.Controllers
 
             var product = await _context.Products
                 .Include(p => p.Category)
-                .Include(p => p.Checkout)
-                .Include(p => p.Transaction)
                 .FirstOrDefaultAsync(m => m.ProductID == id);
             if (product == null)
             {
