@@ -12,8 +12,11 @@ namespace FashTradPlat.Models
         public required Payment Payment { get; set; }  // Reference Navigation property
         [ForeignKey("Checkout")] public int Checkout_ID { get; set; } // Foreign Key
         public required Checkout Checkout { get; set; } // Reference Navigation property
+        [Display(Name = "Transaction Date")]
         public DateTime TransactionDate { get; set; }
+        [Display(Name = "Recieving Address")]
         public string? SendAddress { get; set; }
+        [Display(Name = "Estimated Trade Completion")]
         public DateTime EstCompletion { get; set; }
 
 
