@@ -25,9 +25,9 @@
                 <label asp-for="Checkout_ID" class="control-label"></label>
                 <select asp-for="Checkout_ID" class ="form-control" asp-items="ViewBag.Checkout_ID"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="TransactionDate" class="control-label"></label>
-                <input asp-for="TransactionDate" class="form-control" />
+            <div>
+                <label type="hidden" class="col-md-4 control-label">@Html.DisplayFor(Model => Model.TransactionDate)</label>
+                <input type="hidden" id="lname" name="lname" value="@DateTime.Now.ToString("yyyy-MM-dd")"><br><br>
                 <span asp-validation-for="TransactionDate" class="text-danger"></span>
             </div>
             <div class="form-group">

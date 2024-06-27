@@ -58,7 +58,7 @@ namespace FashTradPlat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Category_ID,Category_Name")] Category category)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
@@ -95,7 +95,7 @@ namespace FashTradPlat.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {

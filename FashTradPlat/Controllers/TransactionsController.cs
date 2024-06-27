@@ -63,7 +63,7 @@ namespace FashTradPlat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
@@ -106,7 +106,7 @@ namespace FashTradPlat.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
