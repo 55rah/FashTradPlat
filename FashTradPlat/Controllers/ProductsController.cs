@@ -20,10 +20,40 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var products = from s in _context.Products
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Product_name.Contains(searchString)
+                                       || s.Product_description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(s => s.Product_name);
+                    break;
+                default:
+                    products = products.OrderBy(s => s.Product_name);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Products/Details/5
