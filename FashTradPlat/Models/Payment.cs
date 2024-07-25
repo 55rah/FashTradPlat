@@ -11,7 +11,7 @@ namespace FashTradPlat.Models
         // This [Column(TypeName = "decimal(7,2)")] defines the decimal field for Price where 7 is the allowed amount of total digits in a number and 2 is the amont after a decimal
         [Column(TypeName = "decimal(7,2)")]
         [Display(Name = "Amount")]
-        [MaxLength(5, ErrorMessage = "shush")]
+        [RegularExpression("^(?!0\\.00$)([1-9]\\d{0,4}(\\.\\d{1,2})?)$", ErrorMessage = "Please enter a valid Amount")]
         public required decimal Payment_amount { get; set; }
         [Display(Name = "Method")]
         public required string Payment_method { get; set; }
