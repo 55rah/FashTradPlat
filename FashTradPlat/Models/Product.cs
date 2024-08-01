@@ -11,6 +11,7 @@ namespace FashTradPlat.Models
         public required string Image { get; set; }
         [Required]
         [Display(Name = "Product Name")]
+        [RegularExpression("^([ \u00c0-\u01ffa-zA-Z'0-9]{1,50})$", ErrorMessage = "Please enter a valid name")]
         public required string Product_name { get; set;}
         [Required]
         [Display(Name = "Description")]
