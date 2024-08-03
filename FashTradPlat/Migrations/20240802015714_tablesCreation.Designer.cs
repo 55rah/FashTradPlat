@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FashTradPlat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240617224841_tableCreation")]
-    partial class tableCreation
+    [Migration("20240802015714_tablesCreation")]
+    partial class tablesCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.18")
+                .HasAnnotation("ProductVersion", "7.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -126,7 +126,7 @@ namespace FashTradPlat.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Checkout_ID"));
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(7,2)");
 
                     b.Property<int?>("Product_ID")
                         .HasColumnType("int");
@@ -150,11 +150,10 @@ namespace FashTradPlat.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Payment_amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(7,2)");
 
-                    b.Property<string>("Payment_method")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Payment_method")
+                        .HasColumnType("int");
 
                     b.HasKey("Payment_ID");
 

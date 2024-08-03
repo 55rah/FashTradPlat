@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FashTradPlat.Migrations
 {
     /// <inheritdoc />
-    public partial class tableCreation : Migration
+    public partial class tablesCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,8 +71,8 @@ namespace FashTradPlat.Migrations
                 {
                     Payment_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Payment_amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Payment_method = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Payment_amount = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
+                    Payment_method = table.Column<int>(type: "int", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -216,7 +216,7 @@ namespace FashTradPlat.Migrations
                     Checkout_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Product_ID = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Price = table.Column<decimal>(type: "decimal(7,2)", nullable: false)
                 },
                 constraints: table =>
                 {
