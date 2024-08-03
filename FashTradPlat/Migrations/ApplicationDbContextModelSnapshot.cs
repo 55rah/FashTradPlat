@@ -214,6 +214,9 @@ namespace FashTradPlat.Migrations
                     b.Property<string>("SendAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 

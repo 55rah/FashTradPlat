@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FashTradPlat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240802015714_tablesCreation")]
+    [Migration("20240803045157_tablesCreation")]
     partial class tablesCreation
     {
         /// <inheritdoc />
@@ -216,6 +216,9 @@ namespace FashTradPlat.Migrations
 
                     b.Property<string>("SendAddress")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");

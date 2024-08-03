@@ -6,7 +6,7 @@ namespace FashTradPlat.Models
     public class Product
     {
         public int ProductID { get; set; }
-        public int CategoryID { get; set; } // Foreign Key from ategory table
+        public int CategoryID { get; set; } // Foreign Key from category table
         [Required]
         public required string Image { get; set; }
         // Required attribute ensures a value inputted into the database

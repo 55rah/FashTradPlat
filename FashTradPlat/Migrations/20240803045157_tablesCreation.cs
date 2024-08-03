@@ -237,6 +237,7 @@ namespace FashTradPlat.Migrations
                     Product_ID = table.Column<int>(type: "int", nullable: false),
                     Payment_ID = table.Column<int>(type: "int", nullable: false),
                     Checkout_ID = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SendAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EstCompletion = table.Column<DateTime>(type: "datetime2", nullable: false)
