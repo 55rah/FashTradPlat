@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashTradPlat.Areas.Identity.Data;
 using FashTradPlat.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FashTradPlat.Controllers
 {
+    [Authorize]
     public class TransactionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +29,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -48,6 +51,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID");
@@ -59,6 +63,7 @@ namespace FashTradPlat.Controllers
         // POST: Transactions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
@@ -76,6 +81,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -97,6 +103,7 @@ namespace FashTradPlat.Controllers
         // POST: Transactions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
@@ -133,6 +140,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -154,6 +162,7 @@ namespace FashTradPlat.Controllers
         }
 
         // POST: Transactions/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

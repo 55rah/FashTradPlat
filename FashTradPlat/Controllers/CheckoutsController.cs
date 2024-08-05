@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashTradPlat.Areas.Identity.Data;
 using FashTradPlat.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FashTradPlat.Controllers
 {
+    [Authorize]
     public class CheckoutsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +29,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Checkouts/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Checkouts == null)
@@ -46,6 +49,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Checkouts/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "ProductID");
@@ -55,6 +59,7 @@ namespace FashTradPlat.Controllers
         // POST: Checkouts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Checkout_ID,Product_ID,Price")] Checkout checkout)
@@ -70,6 +75,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Checkouts/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Checkouts == null)
@@ -89,6 +95,7 @@ namespace FashTradPlat.Controllers
         // POST: Checkouts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Checkout_ID,Product_ID,Price")] Checkout checkout)
@@ -123,6 +130,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Checkouts/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Checkouts == null)
@@ -142,6 +150,7 @@ namespace FashTradPlat.Controllers
         }
 
         // POST: Checkouts/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

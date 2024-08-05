@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashTradPlat.Areas.Identity.Data;
 using FashTradPlat.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FashTradPlat.Controllers
 {
@@ -57,6 +58,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Products/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Products == null)
@@ -76,6 +78,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Products/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID");
@@ -85,6 +88,7 @@ namespace FashTradPlat.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
@@ -100,6 +104,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -119,6 +124,7 @@ namespace FashTradPlat.Controllers
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
@@ -153,6 +159,7 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
@@ -172,6 +179,7 @@ namespace FashTradPlat.Controllers
         }
 
         // POST: Products/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
