@@ -16,6 +16,7 @@ namespace FashTradPlat.Models
         [Display(Name = "Product Name")]
         [RegularExpression("^([ \u00c0-\u01ffa-zA-Z'0-9]{1,50})$", ErrorMessage = "Please enter a valid name")]
         public required string Product_name { get; set;}
+        // This regular expression is the same as above except it allows up to 70 characters
         [Required]
         [Display(Name = "Description")]
         [RegularExpression("^([ À-ǿa-zA-Z'0-9]{1,70})$", ErrorMessage = "Please enter a valid description")] 
