@@ -1,11 +1,11 @@
 ﻿@model PaginatedList<FashTradPlat.Models.Product>
 
 @{
-    ViewData["Title"] = "Listings";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Listings</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,9 +25,6 @@
     <thead>
         <tr>
             <th>
-                Image
-            </th>
-            <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Product Name</a>
             </th>
             <th>
@@ -45,9 +42,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product_name)
             </td>

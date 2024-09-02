@@ -14,10 +14,12 @@ namespace FashTradPlat.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this._hostEnvironment = hostEnvironment;
         }
 
         // GET: Products
@@ -91,11 +93,23 @@ namespace FashTradPlat.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,ImageFile")] Product product)
         {
             if (!ModelState.IsValid)
             {
-                _context.Add(product);
+                // Saves image to wwwroot/image
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                string extension = Path.GetExtension(product.ImageFile.FileName);
+                product.ImageName=fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await product.ImageFile.CopyToAsync(fileStream);
+                }
+
+                // Insert record
+                    _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -127,7 +141,7 @@ namespace FashTradPlat.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,ImageName")] Product product)
         {
             if (id != product.ProductID)
             {
@@ -189,18 +203,23 @@ namespace FashTradPlat.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
             }
             var product = await _context.Products.FindAsync(id);
+            // Deletes image from wwwroot/images upon its record deletion
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath,"Image",product.ImageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+
             if (product != null)
             {
                 _context.Products.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.ProductID == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.ProductID == id)).GetValueOrDefault();
         }
     }
 }
