@@ -141,7 +141,7 @@ namespace FashTradPlat.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,ImageName")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,CategoryID,Image,Product_name,Product_description,Product_request,ImageFile,ImageName")] Product product)
         {
             if (id != product.ProductID)
             {
@@ -152,7 +152,45 @@ namespace FashTradPlat.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    // Retrieve the existing product entity without tracking
+                    var existingProduct = await _context.Products
+                        .FirstOrDefaultAsync(e => e.ProductID == id);
+
+                    if (existingProduct == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Update specific properties
+                    existingProduct.CategoryID = product.CategoryID;
+                    existingProduct.Product_name = product.Product_name;
+                    existingProduct.Product_description = product.Product_description;
+                    existingProduct.Product_request = product.Product_request;
+                    existingProduct.ImageFile = product.ImageFile;
+
+                    // updates image file if a new file is uploaded
+                    if (product.ImageFile != null && product.ImageFile.Length > 0)
+                    {
+
+
+                        // Generate a unique file name for the new image
+                        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + product.ImageFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await product.ImageFile.CopyToAsync(fileStream);
+                        }
+                        existingProduct.ImageName = uniqueFileName;
+                    }
+                    else if (string.IsNullOrEmpty(product.ImageName))
+                    {
+                        // If no new ImageFile is provided and Name is null
+                        // set it to the existing ImageName to maintain the current image
+                        existingProduct.ImageName = existingProduct.ImageName;
+                    }
+
+                    _context.Update(existingProduct);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -170,6 +208,19 @@ namespace FashTradPlat.Controllers
             }
             ViewData["CategoryID"] = new SelectList(_context.Categories, "Category_ID", "Category_ID", product.CategoryID);
             return View(product);
+        }
+
+        // Deletes old image file if a new one is uploaded
+        private void DeleteOldImage(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string filePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", fileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
         }
 
         // GET: Products/Delete/5
