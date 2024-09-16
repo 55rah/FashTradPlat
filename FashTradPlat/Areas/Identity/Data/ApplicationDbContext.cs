@@ -27,6 +27,32 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
         base.OnModelCreating(builder);
+        builder.Entity<IdentityUserLogin<string>>(entity =>
+        {
+            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+        });
+
+        builder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id= "1", Name="Admin", NormalizedName="ADMIN"}
+            );
+        var hasher = new PasswordHasher<IdentityUser>();
+        builder.Entity<IdentityUser>().HasData(
+
+            new IdentityUser
+            {
+                Id = "1",
+                UserName = "admin@example.com",
+                NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                Email = "admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, "Admin123")
+            }
+        );
+        builder.Entity<IdentityUserRole<string>>().HasData(
+            new IdentityUserRole<string> { RoleId= "1", UserId="1" }
+        );
+
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
