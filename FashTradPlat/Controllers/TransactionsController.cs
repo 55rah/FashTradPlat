@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashTradPlat.Areas.Identity.Data;
 using FashTradPlat.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FashTradPlat.Controllers
 {
-    [Authorize]
     public class TransactionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +27,6 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Details/5
-        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -51,24 +48,22 @@ namespace FashTradPlat.Controllers
         }
 
         // GET: Transactions/Create
-        [Authorize]
         public IActionResult Create()
         {
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID");
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID");
-            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Image");
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Product_description");
             return View();
         }
 
         // POST: Transactions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
+        public async Task<IActionResult> Create([Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate")] Transaction transaction)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
@@ -76,12 +71,11 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
-            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Image", transaction.Product_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Product_description", transaction.Product_ID);
             return View(transaction);
         }
 
         // GET: Transactions/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -96,24 +90,23 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
-            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Image", transaction.Product_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Product_description", transaction.Product_ID);
             return View(transaction);
         }
 
         // POST: Transactions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate,SendAddress,EstCompletion")] Transaction transaction)
+        public async Task<IActionResult> Edit(int id, [Bind("Transaction_ID,Product_ID,Payment_ID,Checkout_ID,Status,TransactionDate")] Transaction transaction)
         {
             if (id != transaction.Transaction_ID)
             {
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -135,12 +128,11 @@ namespace FashTradPlat.Controllers
             }
             ViewData["Checkout_ID"] = new SelectList(_context.Checkouts, "Checkout_ID", "Checkout_ID", transaction.Checkout_ID);
             ViewData["Payment_ID"] = new SelectList(_context.Payments, "Payment_ID", "Payment_ID", transaction.Payment_ID);
-            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Image", transaction.Product_ID);
+            ViewData["Product_ID"] = new SelectList(_context.Products, "ProductID", "Product_description", transaction.Product_ID);
             return View(transaction);
         }
 
         // GET: Transactions/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Transactions == null)
@@ -162,7 +154,6 @@ namespace FashTradPlat.Controllers
         }
 
         // POST: Transactions/Delete/5
-        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

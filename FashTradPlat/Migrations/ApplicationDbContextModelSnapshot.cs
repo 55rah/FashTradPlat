@@ -99,19 +99,19 @@ namespace FashTradPlat.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e48dbecc-5f88-4b2d-96e7-f1c374e100af",
-                            Email = "admin@example.com",
+                            ConcurrencyStamp = "c9590499-4296-4407-bcb0-8feb8e78e043",
+                            Email = "admin@ftp.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
                             LastName = "User",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAED0mb+GvdM4rpzx1WI2APEvejd9X/WgPDxVbL+woRKW/leTlQbDYAu+Lxc2iqjGTiA==",
+                            NormalizedEmail = "ADMIN@FTP.COM",
+                            NormalizedUserName = "ADMIN@FTP.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHjm5xM79dELlbJ0NJXU87oFFWltkWFPdxw4kgw4F7afOS76EKpfhNMBQaBzAEFSqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6dc594ef-f2c2-4458-a471-fcd11299bb2b",
+                            SecurityStamp = "668f0c2e-ca7b-4905-80c8-96ae05dd46b0",
                             TwoFactorEnabled = false,
-                            UserName = "admin@example.com"
+                            UserName = "admin@ftp.com"
                         });
                 });
 
@@ -220,17 +220,11 @@ namespace FashTradPlat.Migrations
                     b.Property<int>("Checkout_ID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EstCompletion")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Payment_ID")
                         .HasColumnType("int");
 
                     b.Property<int>("Product_ID")
                         .HasColumnType("int");
-
-                    b.Property<string>("SendAddress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

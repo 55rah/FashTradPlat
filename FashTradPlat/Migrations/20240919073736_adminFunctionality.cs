@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,6 +11,14 @@ namespace FashTradPlat.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "EstCompletion",
+                table: "Transactions");
+
+            migrationBuilder.DropColumn(
+                name: "SendAddress",
+                table: "Transactions");
+
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",
                 table: "AspNetUsers",
@@ -36,7 +45,7 @@ namespace FashTradPlat.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "e48dbecc-5f88-4b2d-96e7-f1c374e100af", "admin@example.com", true, "Admin", "User", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAED0mb+GvdM4rpzx1WI2APEvejd9X/WgPDxVbL+woRKW/leTlQbDYAu+Lxc2iqjGTiA==", null, false, "6dc594ef-f2c2-4458-a471-fcd11299bb2b", false, "admin@example.com" });
+                values: new object[] { "1", 0, "c9590499-4296-4407-bcb0-8feb8e78e043", "admin@ftp.com", true, "Admin", "User", false, null, "ADMIN@FTP.COM", "ADMIN@FTP.COM", "AQAAAAIAAYagAAAAEHjm5xM79dELlbJ0NJXU87oFFWltkWFPdxw4kgw4F7afOS76EKpfhNMBQaBzAEFSqw==", null, false, "668f0c2e-ca7b-4905-80c8-96ae05dd46b0", false, "admin@ftp.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -61,6 +70,19 @@ namespace FashTradPlat.Migrations
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "1");
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "EstCompletion",
+                table: "Transactions",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<string>(
+                name: "SendAddress",
+                table: "Transactions",
+                type: "nvarchar(max)",
+                nullable: true);
 
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",

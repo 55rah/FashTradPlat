@@ -29,11 +29,6 @@ namespace FashTradPlat.Models
             TransactionDate = DateTime.Now;
         }
 
-        [Display(Name = "Recieving Address")]
-        public string? SendAddress { get; set; }
-        [Display(Name = "Estimated Trade Completion")]
-        public DateTime EstCompletion { get; set; }
-
 
     }
 }
