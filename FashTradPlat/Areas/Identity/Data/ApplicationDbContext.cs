@@ -25,39 +25,40 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
         base.OnModelCreating(builder);
         builder.Entity<IdentityUserLogin<string>>(entity =>
         {
             entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
         });
-
+        // Creates admin role for authorization
         builder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Id= "1", Name="Admin", NormalizedName="ADMIN"}
+            new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" }
             );
-        var hasher = new PasswordHasher<IdentityUser>();
-        builder.Entity<IdentityUser>().HasData(
 
-            new IdentityUser
+        var harsher = new PasswordHasher<ApplicationUser>();
+        builder.Entity<ApplicationUser>().HasData(
+
+            new ApplicationUser
             {
                 Id = "1",
-                UserName = "admin@example.com",
-                NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                Email = "admin@example.com",
-                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                FirstName = "Admin",
+                LastName = "User",
+                UserName = "admin@ftp.com",
+                NormalizedUserName = "ADMIN@FTP.COM",
+                Email = "admin@ftp.com",
+                NormalizedEmail = "ADMIN@FTP.COM",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Admin123")
+                PasswordHash = harsher.HashPassword(null, "Abcd!1232")
+                // Credentials for Admin
+                // admin@ftp.com
+                // Abcd!1232
             }
         );
+
         builder.Entity<IdentityUserRole<string>>().HasData(
-            new IdentityUserRole<string> { RoleId= "1", UserId="1" }
+            new IdentityUserRole<string> { RoleId = "1", UserId = "1" }
         );
 
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
-
-        builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
     }
 
     public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
